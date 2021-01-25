@@ -1,5 +1,9 @@
 <?php
 
+
+use App\Jobs\SendEmailJob;
+use Carbon\Carbon;
+use Illuminate\Bus\dispatch;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('sendEmail',function(){
+	
+	/*SendEmailJob::dispatch();*//*For Running the job queue we ndd to run job work*/
+	SendEmailJob::dispatch()
+                ->delay(Carbon::now()->addSeconds(5));
+	return "Email is send successfully";
 });
